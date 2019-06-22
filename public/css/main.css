@@ -1,0 +1,117 @@
+.mainContent{
+  margin: 0 auto;
+  width: 1300px;
+  margin-top: 30px;
+}
+
+.paraContainer {
+  width: 1300px;
+  margin: 0 auto;
+  font-family: "Source Code Pro", Consolas, monaco, monospace;
+}
+
+.dark {
+  background: #222;
+}
+
+#parallel-coords {
+  width: 1300px;
+  min-height: 400px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+/* data table styles */
+#paraGrid {
+  height: 240px;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.divgridRow,
+.divgridHeader {
+  clear: left;
+  font-size: 10px;
+  line-height: 24px;
+  height: 24px;
+}
+
+.divgridRow:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.divgridHeader {
+  font-weight: bold;
+  font-size: 9px;
+  background-color: #454545;
+  color: white;
+}
+
+.cell {
+  float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 80px;
+  height: 18px;
+  margin-right: 20px;
+  margin-bottom: 5px;
+}
+
+/* parcoords styles */
+.parcoords>svg,
+.parcoords>canvas {
+  font: 10px "Source Code Pro", Consolas, monaco, monospace;
+  position: absolute;
+}
+
+.parcoords>canvas {
+  pointer-events: none;
+}
+
+.parcoords text.label {
+  cursor: default;
+}
+
+.parcoords rect.background {
+  fill: transparent;
+}
+
+.parcoords rect.background:hover {
+  fill: rgba(120, 120, 120, 0.2);
+}
+
+.parcoords .resize rect {
+  fill: rgba(0, 0, 0, 0.1);
+}
+
+.parcoords rect.extent {
+  fill: rgba(255, 255, 255, 0.25);
+  stroke: rgba(0, 0, 0, 0.6);
+}
+
+.parcoords .axis line,
+.parcoords .axis path {
+  fill: none;
+  stroke: #454545;
+  shape-rendering: crispEdges;
+}
+
+.parcoords canvas {
+  opacity: 1;
+  -moz-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+}
+
+.parcoords canvas.faded {
+  opacity: 0.25;
+}
+
+.parcoords {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

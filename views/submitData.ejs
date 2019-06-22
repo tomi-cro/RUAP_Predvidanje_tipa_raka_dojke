@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= pageTitle %></title>
+  <link rel="stylesheet" href="/css/submitData.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/check">Test your data</a></li>
+    </ul>
+  </header>
+  <main>
+    <form action="/check-result" method="POST">
+      <div class="form-group submitDiv">
+        <span class="labelText">Clump thickness</span>
+        <input class="input form-control" type="text" name="clumpThickness" required>
+        <span class="labelText">Uniformity cell size</span>
+        <input class="input form-control" type="text" name="uniformityCellSize" required>
+        <span class="labelText">Uniformity cell shape</span>
+        <input class="input form-control" type="text" name="uniformityCellShape" required>
+        <span class="labelText">Marginal adhesion</span>
+        <input class="input form-control" type="text" name="marginalAdhesion" required>
+        <span class="labelText">Single epithelial cell size</span>
+        <input class="input form-control" type="text" name="singleEpithelialCellsize" required>
+        <span class="labelText">Bare nuclei</span>
+        <input class="input form-control" type="text" name="bareNuclei" required>
+        <span class="labelText">Bland chromatin</span>
+        <input class="input form-control" type="text" name="blandChromatin" required>
+        <span class="labelText">Normal nucleoli</span>
+        <input class="input form-control" type="text" name="normalNucleoli" required>
+        <span class="labelText">Mitoses</span>
+        <input class="input form-control" type="text" name="mitoses" required>
+        <button type="submit" class="btn btn-primary">Test</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

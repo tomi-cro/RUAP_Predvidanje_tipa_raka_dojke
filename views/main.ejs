@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+  <script src="/scripts/libs/d3.parcoords.js"></script>
+  <script src="/scripts/libs/divgrid.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <title><%= pageTitle %></title>
+</head>
+<body>
+  <header>
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link " href="/check">Test your data</a></li>
+    </ul>
+  </header>
+  <main>
+    <div class="mainContent">
+      <% if( prediction == 0) { %>
+        <p>Prediction algorithm says your cancer is benign with certanty of <%= predictionPercent %>%</p>
+      <% } else if( prediction == 1) { %>
+        <p>Prediction algorithm says your cancer is malignant with probability of <%= predictionPercent %>%</p>
+      <% } else { %>
+          <p>You can submit your data to test our algorithm, to do that press the "Test your data" button on navbar </p>
+      <% } %>
+    </div>
+    <div id="parallel-coords" class="parcoords"><h5>Visual representation of data that has alredy been tested</h5></div>
+    <div class="paraContainer">
+      <h5>Data that has alredy been tested presented in table</h5>
+      <p>Mouse over intrested row higlights data in visual graph</p>
+      <div id="paraGrid">
+      </div>
+    </div>
+  </main>
+  <script>
+    var blue_to_brown = d3.scale.linear()
+      .domain([0, 1])
+      .range(["green", "red"])
+      .interpolate(d3.interpolateLab);
+    var paracoords;
+    d3.json('/data/data.json', function (error, data) {
+      paracoords = d3.parcoords()("#parallel-coords")
+        .data(data)
+        .hideAxis(['class'])
+        .composite("darken")
+        .color(function (d) {
+          return blue_to_brown(d.scoredLabels);
+        })
+        .alpha(0.2)
+        .render()
+        .brushMode("1D-axes")
+        .reorderable();
+      var grid = d3.divgrid();
+      drawGrid(data)
+      paracoords.on("brush", function (d) {
+        drawGrid(d)
+      });
+      function drawGrid(data) {
+        d3.select("#paraGrid")
+          .datum(data)
+          .call(grid)
+          .selectAll(".divgridRow")
+          .on({
+            "mouseover": function (d) {
+              paracoords.highlight([d]);
+              d3.select(this).style("cursor", "pointer");
+              },
+            "mouseout": paracoords.unhighlight
+            });
+        }
+      });
+  </script>
+</body>
+</html>

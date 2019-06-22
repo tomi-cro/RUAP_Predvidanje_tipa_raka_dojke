@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- http://bl.ocks.org/eesur/1a2514440351ec22f176 -->
+<!-- http://syntagmatic.github.com/parallel-coordinates/ -->
+
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/paracords.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+  <script src="/scripts/libs/d3.parcoords.js"></script>
+  <script src="/scripts/libs/divgrid.js"></script>
+  <title><%= pageTitle %></title>
+
+  <style>
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Main</a></li>
+        <li><a href="/check">Result</a></li>
+        <li><a href="/graph">Graph</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="parallel-coords" class="parcoords"></div>
+  <div class="container">
+
+    <div id="grid">
+    </div>
+  </div>
+
+  <script>
+    var blue_to_brown = d3.scale.linear()
+      .domain([0, 1])
+      .range(["green", "red"])
+      .interpolate(d3.interpolateLab);
+    var graph;
+    d3.json('/data/data.json', function (error, data) {
+      graph = d3.parcoords()("#parallel-coords")
+        .data(data)
+        .hideAxis(['class'])
+        .composite("darken")
+        .color(function (d) {
+          return blue_to_brown(d.scoredLabels);
+        })
+        .alpha(0.2)
+        .render()
+        .brushMode("1D-axes")
+        .reorderable();
+      var grid = d3.divgrid();
+      drawGrid(data)
+      graph.on("brush", function (d) {
+        drawGrid(d)
+      });
+      function drawGrid(data) {
+        d3.select("#grid")
+          .datum(data)
+          .call(grid)
+          .selectAll(".row")
+          .on({
+            "mouseover": function (d) {
+              graph.highlight([d]);
+              d3.select(this).style("cursor", "pointer");
+            },
+            "mouseout": graph.unhighlight
+          });
+      }
+    });
+
+  </script>
+</body>
